@@ -1,4 +1,18 @@
 // create timer variable that starts at 75 and score variable that starts at 0
+var timeRemaining = 75;
+var score = 0;
+var viewHighScoresEl = document.querySelector("#high-scores");
+var timerSpanEl = document.querySelector("#timer");
+var pageTitleEl = document.querySelector("#page-title");
+var quizEl = document.querySelector("#quiz");
+var questionEl = document.querySelector("questions");
+var answersContainerEl = document.querySelector("#answers");
+var answerBtn1 = document.querySelector("#answer-button-1");
+var answerBtn2 = document.querySelector("#answer-button-2");
+var answerBtn3 = document.querySelector("#answer-button-3");
+var answerBtn4 = document.querySelector("#answer-button-4");
+var startSubmitBtn = document.querySelector("#start-submit-btn");
+var feedbackEl = document.querySelector("#response-feedback");
 
 // create question and answer choice array
 
