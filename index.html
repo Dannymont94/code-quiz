@@ -9,29 +9,26 @@
     <body>
         <header>
             <a href="#" id="high-scores">View High Scores</a>
-            <h2>Time: <span id="timer">0</span></h2>
+            <p>Time: <span id="timer">0</span></p>
         </header>
         <main id="quiz">
+            <h1 id="page-title">Coding Quiz</h1>
             <div id="questions-and-answers">
-                <h1 id="page-title">Coding Quiz</h1>
                 <p id="questions">Click the button when you're ready to play!</p>
                 <div id="answers">
-                    <button id="answer1">Option 1</button>
-                    <button id="answer2">Option 2</button>
-                    <button id="answer3">Option 3</button>
-                    <button id="answer4">Option 4</button>
+                    <button type="submit" class="answer-btn" id="answer1">Option 1</button>
+                    <button type="submit" class="answer-btn" id="answer2">Option 2</button>
+                    <button type="submit" class="answer-btn" id="answer3">Option 3</button>
+                    <button type="submit" class="answer-btn" id="answer4">Option 4</button>
                 </div>
             </div>
-            <button type="submit" id="submit-btn">Start!</button>
+            <button type="submit" id="start-btn">Start!</button>
         </main>
 
-
-
-
-
-
-
-
+        <section id="response-results">
+            <!-- Need to inform player if their choice was right or wrong here -->
+        </section>
+        
 
         <script src="./assets/js/script.js"></script>
     </body>
