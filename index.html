@@ -25,15 +25,19 @@
             <button type="submit" id="start-btn">Start!</button>
         </main>
 
-        <form id="high-score-form" class="hidden">
+        <form id="high-score-entry" class="hidden">
             <label for="initial-entry">Enter Your Initials:</label>
             <input name="initial-entry" type="text" id="initial-entry" required />
             <button type="submit" id="high-score-submit">Submit</button>
         </form>
 
-        <form>
-            <button id="restart-btn" class="hidden">Go Back</button>
-            <button id="clear-high-scores" class="hidden">Clear High Scores</button>
+        <section id="high-scores-grid" class="hidden">
+            <!-- High scores from localStorage load here -->
+        </section>
+
+        <form id="quiz-end-form" class="hidden">
+            <button id="restart-btn">Go Back</button>
+            <button id="clear-scores-btn">Clear High Scores</button>
         </form>
 
         <section id="response-feedback">

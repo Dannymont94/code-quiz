@@ -1,4 +1,4 @@
-// create timer variable that starts at 75 and score variable that starts at 0
+// define const HTML element targets
 const viewHighScoresEl = document.querySelector("#high-scores");
 const timerSpanEl = document.querySelector("#timer");
 const pageTitleEl = document.querySelector("#page-title");
@@ -10,9 +10,12 @@ const choiceBtn2 = document.querySelector("#choice-button-2");
 const choiceBtn3 = document.querySelector("#choice-button-3");
 const choiceBtn4 = document.querySelector("#choice-button-4");
 const startBtn = document.querySelector("#start-btn");
-const highScoreFormEl = document.querySelector("#high-score-form")
-const initialEntryEl = document.querySelector("#initial-entry")
-const highScoreSubmitBtn = document.querySelector("#high-score-submit")
+const highScoreEntryEl = document.querySelector("#high-score-entry");
+const initialEntryEl = document.querySelector("#initial-entry");
+const highScoreSubmitBtn = document.querySelector("#high-score-submit");
+const highScoresGridEl = document.querySelector("#high-scores-grid");
+const quizEndEl = document.querySelector("#quiz-end-form");
+const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
 const feedbackEl = document.querySelector("#response-feedback");
 
 // create question and answer choice array
@@ -44,13 +47,14 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
-var timeRemaining = 100;
+// define reassignable variables
+var timeRemaining = 10;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
 var countdown = "";
 
-// declare function that starts counter and asks user questions
+// starts counter and asks user questions
 function startQuiz() {
     pageTitleEl.classList.add("hidden");
     startBtn.classList.add("hidden");
@@ -59,7 +63,7 @@ function startQuiz() {
     askQuestions();
 }
 
-// declare function that displays timeRemaining to user and decrements timeRemaining once per second
+// display timeRemaining to user and decrement timeRemaining once per second
 function timer() {
     if (timeRemaining <= 0) {
         // when timer reaches 0, the game is over.
@@ -71,7 +75,7 @@ function timer() {
     timeRemaining--;
 }
 
-// declare function that asks user questions
+// asks user questions from quizBankArr
 function askQuestions() {
     console.log("currentQuestionIndex:", currentQuestionIndex, ", lastQuestionIndex:", lastQuestionIndex);
     console.log("Question #" + (currentQuestionIndex+1) + " loaded")
@@ -83,6 +87,7 @@ function askQuestions() {
     choiceBtn4.textContent = "4. " + quizBankArr[currentQuestionIndex].choice4
 };
 
+// checks user's answer against correct answer
 function checkResponse(response) {
     console.log("button clicked: ", response)
     // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
@@ -106,11 +111,11 @@ function checkResponse(response) {
 }
 
 function checkGameOver() {
-     // when end of question array is reached, game is over
-     if (currentQuestionIndex === lastQuestionIndex || timeRemaining <= 0) {
-         answersContainerEl.classList.add("hidden");
-         clearInterval(countdown);
-        recordFinalScore();
+    // when end of question array is reached, game is over
+    if (currentQuestionIndex === lastQuestionIndex || timeRemaining <= 0) {
+        answersContainerEl.classList.add("hidden");
+        clearInterval(countdown);
+        endQuiz();
     } 
     // if there are more questions left to ask, generate them
     else {
@@ -119,25 +124,34 @@ function checkGameOver() {
     }
 }
 
-// display user's final score and ask for their initials.
-function recordFinalScore() {
-    highScoreFormEl.classList.remove("hidden");
+// display user's final score and ask for their initials
+function endQuiz() {
+    highScoreEntryEl.classList.remove("hidden");
     questionEl.textContent = "Final Score: " + score;
 }
 
 // store final score and initials in localStorage
-function storeHighScoreData(event){
+function storeHighScore(event){
     event.preventDefault();
     if (!localStorage.getItem("high-score") || localStorage.getItem("high-score") < score) {
         localStorage.setItem("initials", initialEntryEl.value);
         localStorage.setItem("high-score", score);
     }
+    highScoreEntryEl.classList.add("hidden");
+    questionEl.classList.add("hidden");
     displayHighScores();
 }
 
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
 function displayHighScores() {
+    pageTitleEl.classList.remove("hidden");
+    pageTitleEl.textContent = "High Scores";
+    quizEndEl.classList.remove("hidden");
     console.log("High Score: " + localStorage.getItem("initials") + " " + localStorage.getItem("high-score"));
+}
+
+function clearHighScores() {
+    // clear data from localStorage if there is any
 }
 
 
@@ -149,4 +163,6 @@ choiceBtn2.addEventListener("click", function() {checkResponse(2)});
 choiceBtn3.addEventListener("click", function() {checkResponse(3)});
 choiceBtn4.addEventListener("click", function() {checkResponse(4)});
 
-highScoreFormEl.addEventListener("submit", storeHighScoreData);
+highScoreEntryEl.addEventListener("submit", storeHighScore);
+
+clearHighScoresBtn.addEventListener("click", clearHighScores);
