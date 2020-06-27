@@ -16,3 +16,7 @@
   .hidden {
       display: none;
   }
+
+  #view-high-scores {
+      cursor: pointer;
+  }

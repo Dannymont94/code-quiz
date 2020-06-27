@@ -1,4 +1,6 @@
 // define const HTML element targets
+const bodyEl = document.querySelector("body");
+const headerEl = document.querySelector("header");
 const viewHighScoresEl = document.querySelector("#view-high-scores");
 const timerSpanEl = document.querySelector("#timer");
 const pageTitleEl = document.querySelector("#page-title");
@@ -15,6 +17,7 @@ const initialEntryEl = document.querySelector("#initial-entry");
 const highScoreSubmitBtn = document.querySelector("#high-score-submit");
 const highScoresGridEl = document.querySelector("#high-scores-grid");
 const quizEndEl = document.querySelector("#quiz-end-form");
+const goBackBtn = document.querySelector("#restart-btn")
 const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
 const feedbackEl = document.querySelector("#response-feedback");
 
@@ -71,13 +74,11 @@ function timer() {
         checkGameOver();
     }
     timerSpanEl.textContent = timeRemaining;
-    console.log(timeRemaining);
     timeRemaining--;
 }
 
 // asks user questions from quizBankArr
 function askQuestions() {
-    console.log("currentQuestionIndex:", currentQuestionIndex, ", lastQuestionIndex:", lastQuestionIndex);
     console.log("Question #" + (currentQuestionIndex+1) + " loaded")
     // display questions as text and answer choices as buttons
     questionEl.textContent = "#" + (currentQuestionIndex+1) + ": " + quizBankArr[currentQuestionIndex].question;
@@ -89,7 +90,6 @@ function askQuestions() {
 
 // checks user's answer against correct answer
 function checkResponse(response) {
-    console.log("button clicked: ", response)
     // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
     if (response == quizBankArr[currentQuestionIndex].answer) {
         console.log("Correct!")
@@ -105,7 +105,6 @@ function checkResponse(response) {
             timeRemaining = 0;
         }
         timerSpanEl.textContent = timeRemaining;
-        console.log("time remaining: ", timeRemaining);
         checkGameOver();
     }
 }
@@ -133,7 +132,14 @@ function endQuiz() {
 // store final score and initials in localStorage
 function storeHighScore(event){
     event.preventDefault();
-    if (!localStorage.getItem("high-score") || localStorage.getItem("high-score") < score) {
+    if (localStorage.getItem("highScoreData")) {
+        var oldHighScore = JSON.parse(localStorage.getItem("highScoreData"));
+        if (oldHighScore.highScore < score) {
+        var newHighScoreData = {initials: initialEntryEl.value, highScore: score};
+        localStorage.setItem("highScoreData", JSON.stringify(newHighScoreData));
+        }
+    }
+    else {
         var highScoreData = {initials: initialEntryEl.value, highScore: score};
         localStorage.setItem("highScoreData", JSON.stringify(highScoreData));
     }
@@ -144,17 +150,38 @@ function storeHighScore(event){
 
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
 function displayHighScores() {
-    pageTitleEl.classList.remove("hidden");
-    pageTitleEl.textContent = "High Scores";
-    quizEndEl.classList.remove("hidden");
-    var highScoreData = JSON.parse(localStorage.getItem("highScoreData"));
-    console.log(highScoreData);
+    if (localStorage.getItem("highScoreData")) {
+        questionEl.classList.add("hidden");
+        startBtn.classList.add("hidden");
+        pageTitleEl.classList.remove("hidden");
+        pageTitleEl.textContent = "High Scores";
+        goBackBtn.classList.remove("hidden");
+        clearHighScoresBtn.classList.remove("hidden");
+        var highScoreData = JSON.parse(localStorage.getItem("highScoreData"));
+        highScoresGridEl.classList.remove("hidden");
+        highScoresGridEl.textContent = highScoreData.initials + " - " + highScoreData.highScore;
+    }
+    else {
+        noHighScores();
+    }
+}
+
+// if user clicks "view high scores" while highScoreData in localStorage doesn't exist OR if user clears highScoreData from localStorage
+function noHighScores() {
+    headerEl.classList.add("hidden");
+    pageTitleEl.textContent = "No High Scores!"
+    questionEl.classList.add("hidden");
+    startBtn.classList.add("hidden");
+    goBackBtn.classList.remove("hidden");
 }
 
 // clear data from localStorage if there is any
 function clearHighScores() {
     event.preventDefault();
     localStorage.removeItem("highScoreData")
+    highScoresGridEl.classList.add("hidden");
+    clearHighScoresBtn.classList.add("hidden");
+    noHighScores();
 }
 
 
@@ -167,5 +194,7 @@ choiceBtn3.addEventListener("click", function() {checkResponse(3)});
 choiceBtn4.addEventListener("click", function() {checkResponse(4)});
 
 highScoreEntryEl.addEventListener("submit", storeHighScore);
+
+viewHighScoresEl.addEventListener("click", displayHighScores);
 
 clearHighScoresBtn.addEventListener("click", clearHighScores);
