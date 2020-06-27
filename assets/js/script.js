@@ -19,7 +19,7 @@ const highScoresListEl = document.querySelector("#high-scores-list");
 const quizEndEl = document.querySelector("#quiz-end-form");
 const goBackBtn = document.querySelector("#restart-btn")
 const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
-const feedbackEl = document.querySelector("#response-feedback");
+const feedbackEl = document.querySelector("#feedback");
 
 // create question and answer choice array
 var quizBankArr = [
@@ -61,6 +61,7 @@ var maxHighScores = 5;
 
 // starts counter and asks user questions
 function startQuiz() {
+    viewHighScoresEl.classList.add("hidden");
     pageTitleEl.classList.add("hidden");
     startBtn.classList.add("hidden");
     answersContainerEl.classList.remove("hidden");
@@ -97,8 +98,11 @@ function checkResponse(response) {
         console.log("Correct!")
         score++;
         console.log("score: ", score);
+        feedbackEl.textContent = "Correct!";
+        feedbackEl.classList.remove("hidden");
+        // need timed function that makes feedback message go away after 2 seconds
+        clearFeedback();
         checkGameOver();
-
     }
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
     else {
@@ -108,8 +112,16 @@ function checkResponse(response) {
             timeRemaining = 0;
         }
         timerSpanEl.textContent = timeRemaining;
+        feedbackEl.textContent = "Wrong!";
+        feedbackEl.classList.remove("hidden");
+        // need timed function that makes feedback message go away after 2 seconds
+        clearFeedback();
         checkGameOver();
     }
+}
+
+function clearFeedback() {
+    feedbackEl.classList.add("hidden");
 }
 
 function checkGameOver() {

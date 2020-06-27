@@ -8,27 +8,27 @@
     </head>
     <body>
         <header>
-            <p id="view-high-scores">View High Scores</p>
-            <p>Time: <span id="timer">0</span></p>
+            <p>Time: <span id="timer">100</span></p>
+            <p id="view-high-scores" class="view-high-scores">View High Scores</p>
         </header>
         <main>
             <h1 id="page-title">Coding Quiz</h1>
             <div id="quiz">
                 <p id="question">Click the button when you're ready to play!</p>
                 <div id="answer-choices" class="hidden">
-                    <button type="submit" class="choice-btn" id="choice-button-1">Option 1</button>
-                    <button type="submit" class="choice-btn" id="choice-button-2">Option 2</button>
-                    <button type="submit" class="choice-btn" id="choice-button-3">Option 3</button>
-                    <button type="submit" class="choice-btn" id="choice-button-4">Option 4</button>
+                    <button type="submit" class="choice-btn btn" id="choice-button-1">Option 1</button>
+                    <button type="submit" class="choice-btn btn" id="choice-button-2">Option 2</button>
+                    <button type="submit" class="choice-btn btn" id="choice-button-3">Option 3</button>
+                    <button type="submit" class="choice-btn btn" id="choice-button-4">Option 4</button>
                 </div>
             </div>
-            <button type="submit" id="start-btn">Start!</button>
+            <button type="submit" id="start-btn" class="btn">Start!</button>
         </main>
 
         <form id="high-score-entry" class="hidden">
             <label for="initial-entry">Enter Your Initials:</label>
             <input name="initial-entry" type="text" id="initial-entry" required />
-            <button type="submit" id="high-score-submit">Submit</button>
+            <button type="submit" id="high-score-submit" class="btn">Submit</button>
         </form>
 
         <ul id="high-scores-list" class="hidden">
@@ -36,12 +36,12 @@
         </ul>
 
         <form id="quiz-end-form">
-            <button id="restart-btn" class="hidden">Go Back</button>
-            <button id="clear-scores-btn" class="hidden">Clear High Scores</button>
+            <button id="restart-btn" class="hidden btn">Go Back</button>
+            <button id="clear-scores-btn" class="hidden btn">Clear High Scores</button>
         </form>
 
-        <section id="response-feedback">
-            <!-- Need to inform player if their choice was right or wrong here -->
+        <section class="feedback-wrapper">
+            <p id="feedback" class="hidden"></p>
         </section>
         
 
