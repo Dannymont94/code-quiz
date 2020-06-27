@@ -100,8 +100,7 @@ function checkResponse(response) {
         console.log("score: ", score);
         feedbackEl.textContent = "Correct!";
         feedbackEl.classList.remove("hidden");
-        // need timed function that makes feedback message go away after 2 seconds
-        clearFeedback();
+        setTimeout(clearFeedback, 1000);
         checkGameOver();
     }
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
@@ -114,8 +113,7 @@ function checkResponse(response) {
         timerSpanEl.textContent = timeRemaining;
         feedbackEl.textContent = "Wrong!";
         feedbackEl.classList.remove("hidden");
-        // need timed function that makes feedback message go away after 2 seconds
-        clearFeedback();
+        setTimeout(clearFeedback, 1000);
         checkGameOver();
     }
 }
