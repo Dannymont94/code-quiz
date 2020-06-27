@@ -1,21 +1,19 @@
 // create timer variable that starts at 75 and score variable that starts at 0
-var timeRemaining = 3;
-var score = 0;
-var viewHighScoresEl = document.querySelector("#high-scores");
-var timerSpanEl = document.querySelector("#timer");
-var pageTitleEl = document.querySelector("#page-title");
-var quizEl = document.querySelector("#quiz");
-var questionEl = document.querySelector("questions");
-var answersContainerEl = document.querySelector("#answers");
-var answerBtn1 = document.querySelector("#answer-button-1");
-var answerBtn2 = document.querySelector("#answer-button-2");
-var answerBtn3 = document.querySelector("#answer-button-3");
-var answerBtn4 = document.querySelector("#answer-button-4");
-var startBtn = document.querySelector("#start-btn");
-var feedbackEl = document.querySelector("#response-feedback");
+const viewHighScoresEl = document.querySelector("#high-scores");
+const timerSpanEl = document.querySelector("#timer");
+const pageTitleEl = document.querySelector("#page-title");
+const quizEl = document.querySelector("#quiz");
+const questionEl = document.querySelector("#question");
+const answersContainerEl = document.querySelector("#answers");
+const choiceBtn1 = document.querySelector("#choice-button-1");
+const choiceBtn2 = document.querySelector("#choice-button-2");
+const choiceBtn3 = document.querySelector("#choice-button-3");
+const choiceBtn4 = document.querySelector("#choice-button-4");
+const startBtn = document.querySelector("#start-btn");
+const feedbackEl = document.querySelector("#response-feedback");
 
 // create question and answer choice array
-var quizQuestionsArr = [
+var quizBankArr = [
     {question: "#1. What case is used in JavaScript?", choice1: "camelCase", choice2: "kebab-case", choice3: "snake_case", choice4: "UPPERCASE", answer: "camelCase"},
     {question: "#2. What case is used in CSS?", choice1: "kebab-case", choice2: "camelCase", choice3: "lowercase", choice4: "snake_case", answer: "kebab-case"},
     {question: "#3. Which CSS selector has the highest specificity?", choice1: "ID Selector", choice2: "Class Selector", choice3: "Element Selector", choice4: "Psuedo-Element Selector", answer: "kebab-case"},
@@ -43,8 +41,14 @@ var quizQuestionsArr = [
     {question: "#25. Which of the following is not a JavaScript event?", choice1: "link", choice2: "submit", choice3: "drop", choice4: "click", answer: "link"}
 ];
 
+var timeRemaining = 30;
+var score = 0;
+var lastQuestionIndex = quizBankArr.length -1;
+var currentQuestionIndex = 0;
+
 // declare function that starts counter and asks user questions
 function startQuiz() {
+    // countdown();
     askQuestions();
 }
 
@@ -52,6 +56,7 @@ function startQuiz() {
 function countdown() {
     var timerInterval = setInterval(function() {
         if (timeRemaining === 0) {
+            // when timer reaches 0, the game is over.
             clearInterval(timerInterval);
             // recordHighScore();
         }
@@ -63,22 +68,36 @@ function countdown() {
 
 // declare function that asks user questions
 function askQuestions() {
-    if (timeRemaining > 0) {
-        for (var i = 0; i < quizQuestionsArr.length; i++) {
-            console.log(quizQuestionsArr[i].question);
-        }
+    console.log(currentQuestionIndex, lastQuestionIndex);
+    // when end of question array is reached, game is over
+    if (currentQuestionIndex === lastQuestionIndex) {
+        recordHighScore();
+    }
+    // if there are more questions left to ask, generate them
+    else {
+    // display questions as text and answer choices as buttons
+    questionEl.textContent = quizBankArr[currentQuestionIndex].question;
+    choiceBtn1.textContent = "1. " + quizBankArr[currentQuestionIndex].choice1
+    choiceBtn2.textContent = "2. " + quizBankArr[currentQuestionIndex].choice2
+    choiceBtn3.textContent = "3. " + quizBankArr[currentQuestionIndex].choice3
+    choiceBtn4.textContent = "4. " + quizBankArr[currentQuestionIndex].choice4
+    // increment and ask next question
+    currentQuestionIndex++;
+    askQuestions();
     }
 };
 
-// display questions as text and answer choices as buttons
-
-// determine if user selected correct answer
-
+function checkResponse(response) {
+    console.log(response)
     // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
-
+    
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
+}
 
-// when timer reaches 0 or end of question array is reached, the game is over. Display user's final score and ask for their initials.
+// display user's final score and ask for their initials.
+function recordHighScore() {
+    console.log(score);
+}
 
 // store final score and initials in localStorage
 
@@ -88,3 +107,8 @@ function askQuestions() {
 
 // start quiz when start button is clicked
 startBtn.onclick = startQuiz;
+
+choiceBtn1.addEventListener("click", function() {checkResponse(1)});
+choiceBtn2.addEventListener("click", function() {checkResponse(2)});
+choiceBtn3.addEventListener("click", function() {checkResponse(3)});
+choiceBtn4.addEventListener("click", function() {checkResponse(4)});
