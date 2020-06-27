@@ -1,5 +1,5 @@
 // define const HTML element targets
-const viewHighScoresEl = document.querySelector("#high-scores");
+const viewHighScoresEl = document.querySelector("#view-high-scores");
 const timerSpanEl = document.querySelector("#timer");
 const pageTitleEl = document.querySelector("#page-title");
 const quizEl = document.querySelector("#quiz");
@@ -48,7 +48,7 @@ var quizBankArr = [
 ];
 
 // define reassignable variables
-var timeRemaining = 10;
+var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
@@ -134,8 +134,8 @@ function endQuiz() {
 function storeHighScore(event){
     event.preventDefault();
     if (!localStorage.getItem("high-score") || localStorage.getItem("high-score") < score) {
-        localStorage.setItem("initials", initialEntryEl.value);
-        localStorage.setItem("high-score", score);
+        var highScoreData = {initials: initialEntryEl.value, highScore: score};
+        localStorage.setItem("highScoreData", JSON.stringify(highScoreData));
     }
     highScoreEntryEl.classList.add("hidden");
     questionEl.classList.add("hidden");
@@ -147,11 +147,14 @@ function displayHighScores() {
     pageTitleEl.classList.remove("hidden");
     pageTitleEl.textContent = "High Scores";
     quizEndEl.classList.remove("hidden");
-    console.log("High Score: " + localStorage.getItem("initials") + " " + localStorage.getItem("high-score"));
+    var highScoreData = JSON.parse(localStorage.getItem("highScoreData"));
+    console.log(highScoreData);
 }
 
+// clear data from localStorage if there is any
 function clearHighScores() {
-    // clear data from localStorage if there is any
+    event.preventDefault();
+    localStorage.removeItem("highScoreData")
 }
 
 
