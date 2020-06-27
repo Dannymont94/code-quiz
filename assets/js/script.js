@@ -41,7 +41,7 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
-var timeRemaining = 200;
+var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
@@ -94,6 +94,10 @@ function checkResponse(response) {
     else {
         console.log("Wrong!")
         timeRemaining -= 10;
+        if (timeRemaining <= 0) {
+            timeRemaining = 0;
+        }
+        timerSpanEl.textContent = timeRemaining;
         console.log("time remaining: ", timeRemaining);
         checkGameOver();
     }
@@ -101,7 +105,7 @@ function checkResponse(response) {
 
 function checkGameOver() {
      // when end of question array is reached, game is over
-     if (currentQuestionIndex === lastQuestionIndex) {
+     if (currentQuestionIndex === lastQuestionIndex || timeRemaining <= 0) {
          answersContainerEl.classList.add("hidden");
         recordFinalScore();
     } 
