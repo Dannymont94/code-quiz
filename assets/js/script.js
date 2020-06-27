@@ -10,6 +10,8 @@ const choiceBtn2 = document.querySelector("#choice-button-2");
 const choiceBtn3 = document.querySelector("#choice-button-3");
 const choiceBtn4 = document.querySelector("#choice-button-4");
 const startBtn = document.querySelector("#start-btn");
+const highScoreFormEl = document.querySelector("#high-score-form")
+const highScoreSubmitBtn = document.querySelector("#high-score-submit")
 const feedbackEl = document.querySelector("#response-feedback");
 
 // create question and answer choice array
@@ -41,7 +43,7 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
-var timeRemaining = 100;
+var timeRemaining = 10;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
@@ -58,10 +60,10 @@ function startQuiz() {
 // declare function that displays timeRemaining to user and decrements timeRemaining once per second
 function countdown() {
     var timerInterval = setInterval(function() {
-        if (timeRemaining === 0) {
+        if (timeRemaining <= 0) {
             // when timer reaches 0, the game is over.
             clearInterval(timerInterval);
-            // recordFinalScore();
+            checkGameOver();
         }
         timerSpanEl.textContent = timeRemaining;
         console.log(timeRemaining);
@@ -118,10 +120,15 @@ function checkGameOver() {
 
 // display user's final score and ask for their initials.
 function recordFinalScore() {
-    console.log("final score:", score);
+    highScoreFormEl.classList.remove("hidden");
+    questionEl.textContent = "Final Score: " + score;
 }
 
 // store final score and initials in localStorage
+function storeHighScoreData(event){
+    event.preventDefault();
+    console.log(highScoreFormEl.querySelector("#initial-entry").value);
+}
 
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
 
@@ -134,3 +141,5 @@ choiceBtn1.addEventListener("click", function() {checkResponse(1)});
 choiceBtn2.addEventListener("click", function() {checkResponse(2)});
 choiceBtn3.addEventListener("click", function() {checkResponse(3)});
 choiceBtn4.addEventListener("click", function() {checkResponse(4)});
+
+highScoreFormEl.addEventListener("submit", storeHighScoreData);
