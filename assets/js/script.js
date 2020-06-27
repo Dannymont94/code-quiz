@@ -1,4 +1,4 @@
-// define const HTML element targets
+// define HTML element targets
 const bodyEl = document.querySelector("body");
 const headerEl = document.querySelector("header");
 const viewHighScoresEl = document.querySelector("#view-high-scores");
@@ -15,7 +15,7 @@ const startBtn = document.querySelector("#start-btn");
 const highScoreEntryEl = document.querySelector("#high-score-entry");
 const initialEntryEl = document.querySelector("#initial-entry");
 const highScoreSubmitBtn = document.querySelector("#high-score-submit");
-const highScoresGridEl = document.querySelector("#high-scores-grid");
+const highScoresListEl = document.querySelector("#high-scores-list");
 const quizEndEl = document.querySelector("#quiz-end-form");
 const goBackBtn = document.querySelector("#restart-btn")
 const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
@@ -50,14 +50,15 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
-// define reassignable variables
+// define other variables
 var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
 var countdown = "";
 var highScores = JSON.parse(localStorage.getItem("highScoreData")) || [];
-console.log(highScores);
+var maxHighScores = 5;
+
 // starts counter and asks user questions
 function startQuiz() {
     pageTitleEl.classList.add("hidden");
@@ -70,7 +71,7 @@ function startQuiz() {
 // display timeRemaining to user and decrement timeRemaining once per second
 function timer() {
     if (timeRemaining <= 0) {
-        // when timer reaches 0, the game is over.
+        // when timer reaches 0, the game is over
         clearInterval(countdown);
         checkGameOver();
     }
@@ -97,6 +98,7 @@ function checkResponse(response) {
         score++;
         console.log("score: ", score);
         checkGameOver();
+
     }
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
     else {
@@ -139,6 +141,7 @@ function storeHighScore(event){
     highScores.sort(function(a,b) {
         return b.highScore - a.highScore;
     })
+    highScores.splice(maxHighScores);
     console.log(highScores);
     localStorage.setItem("highScoreData", JSON.stringify(highScores));
 
@@ -152,13 +155,15 @@ function displayHighScores() {
     if (localStorage.getItem("highScoreData")) {
         questionEl.classList.add("hidden");
         startBtn.classList.add("hidden");
-        pageTitleEl.classList.remove("hidden");
         pageTitleEl.textContent = "High Scores";
+        pageTitleEl.classList.remove("hidden");
         goBackBtn.classList.remove("hidden");
         clearHighScoresBtn.classList.remove("hidden");
         var highScoreData = JSON.parse(localStorage.getItem("highScoreData"));
-        highScoresGridEl.classList.remove("hidden");
-        highScoresGridEl.textContent = highScoreData[0].initials + " - " + highScoreData[0].highScore;
+        highScoresListEl.classList.remove("hidden");
+        highScoresListEl.innerHTML = highScoreData.map(function(score) {
+            return '<li class="high-score">' + score.initials + " - " + score.highScore + "</li>"
+        }).join("");
     }
     else {
         noHighScores();
@@ -178,7 +183,7 @@ function noHighScores() {
 function clearHighScores() {
     event.preventDefault();
     localStorage.removeItem("highScoreData")
-    highScoresGridEl.classList.add("hidden");
+    highScoresListEl.classList.add("hidden");
     clearHighScoresBtn.classList.add("hidden");
     noHighScores();
 }
