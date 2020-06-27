@@ -11,6 +11,7 @@ const choiceBtn3 = document.querySelector("#choice-button-3");
 const choiceBtn4 = document.querySelector("#choice-button-4");
 const startBtn = document.querySelector("#start-btn");
 const highScoreFormEl = document.querySelector("#high-score-form")
+const initialEntryEl = document.querySelector("#initial-entry")
 const highScoreSubmitBtn = document.querySelector("#high-score-submit")
 const feedbackEl = document.querySelector("#response-feedback");
 
@@ -43,32 +44,31 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
-var timeRemaining = 10;
+var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
+var countdown = "";
 
 // declare function that starts counter and asks user questions
 function startQuiz() {
     pageTitleEl.classList.add("hidden");
     startBtn.classList.add("hidden");
     answersContainerEl.classList.remove("hidden");
-    // countdown();
+    countdown = setInterval(timer, 1000);
     askQuestions();
 }
 
 // declare function that displays timeRemaining to user and decrements timeRemaining once per second
-function countdown() {
-    var timerInterval = setInterval(function() {
-        if (timeRemaining <= 0) {
-            // when timer reaches 0, the game is over.
-            clearInterval(timerInterval);
-            checkGameOver();
-        }
-        timerSpanEl.textContent = timeRemaining;
-        console.log(timeRemaining);
-        timeRemaining--;
-    }, 1000);
+function timer() {
+    if (timeRemaining <= 0) {
+        // when timer reaches 0, the game is over.
+        clearInterval(countdown);
+        checkGameOver();
+    }
+    timerSpanEl.textContent = timeRemaining;
+    console.log(timeRemaining);
+    timeRemaining--;
 }
 
 // declare function that asks user questions
@@ -109,6 +109,7 @@ function checkGameOver() {
      // when end of question array is reached, game is over
      if (currentQuestionIndex === lastQuestionIndex || timeRemaining <= 0) {
          answersContainerEl.classList.add("hidden");
+         clearInterval(countdown);
         recordFinalScore();
     } 
     // if there are more questions left to ask, generate them
@@ -127,7 +128,8 @@ function recordFinalScore() {
 // store final score and initials in localStorage
 function storeHighScoreData(event){
     event.preventDefault();
-    console.log(highScoreFormEl.querySelector("#initial-entry").value);
+    localStorage.setItem("initials", initialEntryEl.value);
+    localStorage.setItem("high-score", score);
 }
 
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
