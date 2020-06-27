@@ -4,7 +4,7 @@ const timerSpanEl = document.querySelector("#timer");
 const pageTitleEl = document.querySelector("#page-title");
 const quizEl = document.querySelector("#quiz");
 const questionEl = document.querySelector("#question");
-const answersContainerEl = document.querySelector("#answers");
+const answersContainerEl = document.querySelector("#answer-choices");
 const choiceBtn1 = document.querySelector("#choice-button-1");
 const choiceBtn2 = document.querySelector("#choice-button-2");
 const choiceBtn3 = document.querySelector("#choice-button-3");
@@ -14,31 +14,31 @@ const feedbackEl = document.querySelector("#response-feedback");
 
 // create question and answer choice array
 var quizBankArr = [
-    {question: "#1. What case is used in JavaScript?", choice1: "camelCase", choice2: "kebab-case", choice3: "snake_case", choice4: "UPPERCASE", answer: "camelCase"},
-    {question: "#2. What case is used in CSS?", choice1: "kebab-case", choice2: "camelCase", choice3: "lowercase", choice4: "snake_case", answer: "kebab-case"},
-    {question: "#3. Which CSS selector has the highest specificity?", choice1: "ID Selector", choice2: "Class Selector", choice3: "Element Selector", choice4: "Psuedo-Element Selector", answer: "kebab-case"},
-    {question: "#4. Which HTML element is used to link the JavaScript file?", choice1: "<script>", choice2: "<link>", choice3: "<src>", choice4: "<js>", answer: "ID Selector"},
-    {question: "#5. Which HTML element is used to link the CSS file?", choice1: "<link>", choice2: "<script>", choice3: "<css>", choice4: "<stylesheet>", answer: "<link>"},
-    {question: "#6. Which is the correct place to insert a <script> tag?", choice1: "The bottom of the <body> section", choice2: "The top of the <head> section", choice3: "The bottom of the <head> section", choice4: "The top of the <body> section", answer: "The bottom of the <body> section"},
-    {question: '#7. How would you write "Hello World" in an alert box?', choice1: 'alert("Hello World");', choice2: 'alert.HelloWorld', choice3: 'alert(Hello World);', choice4: 'alertUser("Hello World");', answer: 'alert("Hello World");'},
-    {question: "#8. How do you declare a function in JavaScript?", choice1: "function myFunction(){}", choice2: "function.myFunction(){};", choice3: 'function ("myFunction") = {};', choice4: "function = myFunction(){}", answer: "function myFunction(){}"},
-    {question: "#9. How do you call a function in JavaScript?", choice1: "myFunction();", choice2: "call myFunction;", choice3: 'call("myFunction");', choice4: "execute myFunction();", answer: "myFunction();"},
-    {question: "#10. How do you write an if statement in JavaScript?", choice1: "if (i === 5)", choice2: "if i === 5", choice3: 'if "i === 5"', choice4: "if (i = 5)", answer: "if (i === 5)"},
-    {question: "#11. How does a WHILE loop start?", choice1: "while (i <= 10)", choice2: 'while "i <= 10"' , choice3: "while (i =< 10)", choice4: "while i <= 10", answer: "while (i <= 10)"},
-    {question: "#12. How does a FOR loop start?", choice1: "for (var i = 0; i < 5; i++)", choice2: "for i = 1", choice3: "for (i = 0; i++)", choice4: "for (i = 0++)", answer: "for (var i = 0; i < 5; i++)"},
-    {question: "#13. How do you add a comment in HTML?", choice1: "<!-- my comment -->", choice2: "// my comment", choice3: "/* my comment */", choice4: 'comment: "my comment"', answer: "<!-- my comment -->"},
-    {question: "#14. How do you add a comment in CSS?", choice1: "/* my comment */", choice2: "<!-- my comment -->", choice3: "// my comment", choice4: "comment {my-comment: my comment}", answer: "/* my comment */"},
-    {question: "#15. How do you add a comment in JavaScript?", choice1: "// my comment", choice2: "<!-- my comment -->", choice3: 'comment("my comment")', choice4: 'var myComment = "my comment"', answer: "// my comment"},
-    {question: "#16. How do you add a comment in JavaScript that has more than one line?", choice1: "/* my multi-line comment */", choice2: "<!-- my multi-line comment -->", choice3: 'comment("my multi-line comment")', choice4: "// my multi-line comment //", answer: "/* my multi-line comment */"},
-    {question: "#17. How do you create a JavaScript array?", choice1: 'var colors = ["red", "blue", "green"];', choice2: 'var colors = "red", "blue", "green";', choice3: 'array colors = ["red", "blue", "green"];', choice4: 'var colors = ("red", "green", "blue");', answer: 'var colors = ["red", "blue", "green"];'},
-    {question: "#18. What method in JavaScript will always round a number down to the nearest whole number?", choice1: "Math.floor(x)", choice2: "Math.round(x)", choice3: "Math.random(x)", choice4: "Math.abs(x)", answer: "Math.floor(x)"},
-    {question: "#19. The Math.random method will return a random number between ______.", choice1: "0 and 1", choice2: "0 and 100", choice3: "1 and 10", choice4: "-1 and 1", answer: "0 and 1"},
-    {question: "#20. How can we execute a function callback when a user clicks on a button?", choice1: 'myButtonEl.addEventListener("click", myFunction);', choice2: "myButtonEl.clickListener.myFunction();", choice3: "myButtonEl.onclick.myFunction();", choice4: "click.myButtonEl.myFunction();", answer: 'myButtonEl.addEventListener("click", myFunction);'},
-    {question: "#21. How do you declare a JavaScript variable?", choice1: "var myVar = value;", choice2: "myVar = value;", choice3: "variable myVar = value;", choice4: "var(myVar) = value;", answer: "var myVar = value;"},
-    {question: "#22. What is the logical operator for OR?", choice1: "||", choice2: "&&", choice3: "%%", choice4: "$$", answer: "||"},
-    {question: "#23. What is the logical operator for AND?", choice1: "&&", choice2: "^^", choice3: "##", choice4: "||", answer: "&&"},
-    {question: "#24. Which operator is used to assign a value to a variable?", choice1: "=", choice2: "==", choice3: "===", choice4: "!=", answer: "="},
-    {question: "#25. Which of the following is not a JavaScript event?", choice1: "link", choice2: "submit", choice3: "drop", choice4: "click", answer: "link"}
+    {question: "#1. What case is used in JavaScript?", choice1: "UPPERCASE", choice2: "kebab-case", choice3: "snake_case", choice4: "camelCase", answer: "4"},
+    {question: "#2. What case is used in CSS?", choice1: "camelCase", choice2: "kebab-case", choice3: "lowercase", choice4: "snake_case", answer: "2"},
+    {question: "#3. Which CSS selector has the highest specificity?", choice1: "Psuedo-Element Selector", choice2: "Class Selector", choice3: "Element Selector", choice4: "ID Selector", answer: "4"},
+    {question: "#4. Which HTML element is used to link the JavaScript file?", choice1: "<script>", choice2: "<link>", choice3: "<src>", choice4: "<js>", answer: "1"},
+    {question: "#5. Which HTML element is used to link the CSS file?", choice1: "<script>", choice2: "<link>", choice3: "<css>", choice4: "<stylesheet>", answer: "2"},
+    {question: "#6. What is the best place to insert a <script> tag?", choice1: "The bottom of the <head> section", choice2: "The top of the <head> section", choice3: "The bottom of the <body> section", choice4: "The top of the <body> section", answer: "3"},
+    {question: '#7. How would you write "Hello World" in an alert box?', choice1: 'alert("Hello World");', choice2: 'alert.HelloWorld', choice3: 'alert(Hello World);', choice4: 'alertUser("Hello World");', answer: "1"},
+    {question: "#8. How do you declare a function in JavaScript?", choice1: 'function ("myFunction") = {};', choice2: "function.myFunction(){};", choice3: "function myFunction(){}", choice4: "function = myFunction(){}", answer: "3"},
+    {question: "#9. How do you call a function in JavaScript?", choice1: "call myFunction;", choice2: "myFunction();", choice3: 'call("myFunction");', choice4: "execute myFunction();", answer: "2"},
+    {question: "#10. How do you write an if statement in JavaScript?", choice1: "if (i = 5)", choice2: "if i === 5", choice3: 'if "i === 5"', choice4: "if (i === 5)", answer: "4"},
+    {question: "#11. How does a WHILE loop start?", choice1: "while (i <= 10)", choice2: 'while "i <= 10"' , choice3: "while (i =< 10)", choice4: "while i <= 10", answer: "1"},
+    {question: "#12. How does a FOR loop start?", choice1: "for (i = 0++)", choice2: "for i = 1", choice3: "for (i = 0; i++)", choice4: "for (var i = 0; i < 5; i++)", answer: "4"},
+    {question: "#13. How do you add a comment in HTML?", choice1: "<!-- my comment -->", choice2: "// my comment", choice3: "/* my comment */", choice4: 'comment: "my comment"', answer: "1"},
+    {question: "#14. How do you add a comment in CSS?", choice1: "// my comment", choice2: "<!-- my comment -->", choice3: "/* my comment */", choice4: "comment {my-comment: my comment}", answer: "3"},
+    {question: "#15. How do you add a comment in JavaScript?", choice1: "<!-- my comment -->", choice2: "// my comment", choice3: 'comment("my comment")', choice4: 'var myComment = "my comment"', answer: "2"},
+    {question: "#16. How do you add a comment in JavaScript that has more than one line?", choice1: "/* my multi-line comment */", choice2: "<!-- my multi-line comment -->", choice3: 'comment("my multi-line comment")', choice4: "// my multi-line comment //", answer: "1"},
+    {question: "#17. How do you create a JavaScript array?", choice1: 'var colors = "red", "blue", "green";', choice2: 'var colors = ["red", "blue", "green"];', choice3: 'array colors = ["red", "blue", "green"];', choice4: 'var colors = ("red", "green", "blue");', answer: "2"},
+    {question: "#18. What method in JavaScript will always round a number down to the nearest whole number?", choice1: "Math.round(x)", choice2: "Math.floor(x)", choice3: "Math.random(x)", choice4: "Math.abs(x)", answer: "2"},
+    {question: "#19. The Math.random method will return a random number between ______.", choice1: "-1 and 1", choice2: "0 and 100", choice3: "1 and 10", choice4: "0 and 1", answer: "4"},
+    {question: "#20. How can we execute a function callback when a user clicks on a button?", choice1: "click.myButtonEl.myFunction();", choice2: "myButtonEl.clickListener.myFunction();", choice3: "myButtonEl.onclick.myFunction();", choice4: 'myButtonEl.addEventListener("click", myFunction);', answer: "4"},
+    {question: "#21. How do you declare a JavaScript variable?", choice1: "var myVar = value;", choice2: "myVar = value;", choice3: "variable myVar = value;", choice4: "var(myVar) = value;", answer: "1"},
+    {question: "#22. What is the logical operator for OR?", choice1: "%%", choice2: "&&", choice3: "||", choice4: "$$", answer: "3"},
+    {question: "#23. What is the logical operator for AND?", choice1: "||", choice2: "^^", choice3: "##", choice4: "&&", answer: "4"},
+    {question: "#24. Which operator is used to assign a value to a variable?", choice1: "=", choice2: "==", choice3: "===", choice4: "!=", answer: "1"},
+    {question: "#25. Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
 var timeRemaining = 30;
@@ -48,6 +48,8 @@ var currentQuestionIndex = 0;
 
 // declare function that starts counter and asks user questions
 function startQuiz() {
+    startBtn.className = "hidden";
+    answersContainerEl.classList.remove("hidden");
     // countdown();
     askQuestions();
 }
@@ -58,7 +60,7 @@ function countdown() {
         if (timeRemaining === 0) {
             // when timer reaches 0, the game is over.
             clearInterval(timerInterval);
-            // recordHighScore();
+            // recordFinalScore();
         }
         timerSpanEl.textContent = timeRemaining;
         console.log(timeRemaining);
@@ -68,35 +70,49 @@ function countdown() {
 
 // declare function that asks user questions
 function askQuestions() {
-    console.log(currentQuestionIndex, lastQuestionIndex);
-    // when end of question array is reached, game is over
-    if (currentQuestionIndex === lastQuestionIndex) {
-        recordHighScore();
-    }
-    // if there are more questions left to ask, generate them
-    else {
+    console.log("currentQuestionIndex:", currentQuestionIndex, ", lastQuestionIndex:", lastQuestionIndex);
+    console.log("Question #" + (currentQuestionIndex+1) + " loaded")
     // display questions as text and answer choices as buttons
     questionEl.textContent = quizBankArr[currentQuestionIndex].question;
     choiceBtn1.textContent = "1. " + quizBankArr[currentQuestionIndex].choice1
     choiceBtn2.textContent = "2. " + quizBankArr[currentQuestionIndex].choice2
     choiceBtn3.textContent = "3. " + quizBankArr[currentQuestionIndex].choice3
     choiceBtn4.textContent = "4. " + quizBankArr[currentQuestionIndex].choice4
-    // increment and ask next question
-    currentQuestionIndex++;
-    askQuestions();
-    }
 };
 
 function checkResponse(response) {
-    console.log(response)
+    console.log("button clicked: ", response)
     // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
-    
+    if (response == quizBankArr[currentQuestionIndex].answer) {
+        console.log("Correct!")
+        score++;
+        console.log("score: ", score);
+        checkGameOver();
+    }
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
+    else {
+        console.log("Wrong!")
+        timeRemaining -= 10;
+        console.log("time remaining: ", timeRemaining);
+        checkGameOver();
+    }
+}
+
+function checkGameOver() {
+     // when end of question array is reached, game is over
+     if (currentQuestionIndex === lastQuestionIndex) {
+        recordFinalScore();
+    } 
+    // if there are more questions left to ask, generate them
+    else {
+        currentQuestionIndex++;
+        askQuestions();
+    }
 }
 
 // display user's final score and ask for their initials.
-function recordHighScore() {
-    console.log(score);
+function recordFinalScore() {
+    console.log("final score:", score);
 }
 
 // store final score and initials in localStorage
