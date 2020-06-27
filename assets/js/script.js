@@ -130,10 +130,13 @@ function storeHighScoreData(event){
     event.preventDefault();
     localStorage.setItem("initials", initialEntryEl.value);
     localStorage.setItem("high-score", score);
+    displayHighScores();
 }
 
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
-
+function displayHighScores() {
+    console.log("High Score: " + localStorage.getItem("initials") + " " + localStorage.getItem("high-score"));
+}
 
 
 // start quiz when start button is clicked
