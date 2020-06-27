@@ -128,8 +128,10 @@ function recordFinalScore() {
 // store final score and initials in localStorage
 function storeHighScoreData(event){
     event.preventDefault();
-    localStorage.setItem("initials", initialEntryEl.value);
-    localStorage.setItem("high-score", score);
+    if (!localStorage.getItem("high-score") || localStorage.getItem("high-score") < score) {
+        localStorage.setItem("initials", initialEntryEl.value);
+        localStorage.setItem("high-score", score);
+    }
     displayHighScores();
 }
 
