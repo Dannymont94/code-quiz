@@ -56,7 +56,8 @@ var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
 var countdown = "";
-
+var highScores = JSON.parse(localStorage.getItem("highScoreData")) || [];
+console.log(highScores);
 // starts counter and asks user questions
 function startQuiz() {
     pageTitleEl.classList.add("hidden");
@@ -132,17 +133,15 @@ function endQuiz() {
 // store final score and initials in localStorage
 function storeHighScore(event){
     event.preventDefault();
-    if (localStorage.getItem("highScoreData")) {
-        var oldHighScore = JSON.parse(localStorage.getItem("highScoreData"));
-        if (oldHighScore.highScore < score) {
-        var newHighScoreData = {initials: initialEntryEl.value, highScore: score};
-        localStorage.setItem("highScoreData", JSON.stringify(newHighScoreData));
-        }
-    }
-    else {
-        var highScoreData = {initials: initialEntryEl.value, highScore: score};
-        localStorage.setItem("highScoreData", JSON.stringify(highScoreData));
-    }
+
+    var mostRecentScore = {initials: initialEntryEl.value, highScore: score};
+    highScores.push(mostRecentScore);
+    highScores.sort(function(a,b) {
+        return b.highScore - a.highScore;
+    })
+    console.log(highScores);
+    localStorage.setItem("highScoreData", JSON.stringify(highScores));
+
     highScoreEntryEl.classList.add("hidden");
     questionEl.classList.add("hidden");
     displayHighScores();
@@ -159,7 +158,7 @@ function displayHighScores() {
         clearHighScoresBtn.classList.remove("hidden");
         var highScoreData = JSON.parse(localStorage.getItem("highScoreData"));
         highScoresGridEl.classList.remove("hidden");
-        highScoresGridEl.textContent = highScoreData.initials + " - " + highScoreData.highScore;
+        highScoresGridEl.textContent = highScoreData[0].initials + " - " + highScoreData[0].highScore;
     }
     else {
         noHighScores();
