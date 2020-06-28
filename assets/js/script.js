@@ -100,7 +100,7 @@ function askQuestions() {
 function checkResponse(response) {
     // if correct, let user know they answered correctly and increment score by 1
     if (response == quizBankArr[currentQuestionIndex].answer) {
-        score++;
+        score += 10;
         feedbackEl.textContent = "Correct!";
         bodyEl.setAttribute("style", "background-color:rgb(0, 151, 70)");
         feedbackEl.classList.remove("hidden");
