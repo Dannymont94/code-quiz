@@ -1,22 +1,198 @@
+:root {
+    --darkblue: rgb(0, 0, 139);
+    --darkcyan: rgb(0, 139, 139)
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-align: center;
-  }
-  
-  header {
-      margin: 25px 10%;
-      width: 80%;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-between;
-  }
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
 
-  .hidden {
-      display: none;
-  }
+header {
+    margin: 25px auto;
+    width: 60%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    font-size: 20px;
+}
 
-  #view-high-scores {
-      cursor: pointer;
-  }
+main {
+    width: 75%;
+    margin: 0 auto;
+}
+
+button {
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+.question {
+    font-size: 25px;
+    padding: 0 5px;
+    margin: 40px 0;
+}
+
+header p {
+    padding: 5px 10px;
+}
+
+#view-high-scores {
+    cursor: pointer;
+    color: var(--darkblue);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#view-high-scores:hover {
+    background-color: var(--darkcyan);
+    color: white;
+}
+
+#page-title {
+    color: var(--darkblue);
+    margin: 150px 10px 15px 10px;
+    font-size: 50px;
+}
+
+.btn {
+    background-color: var(--darkblue);
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    margin: 10px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--darkcyan);
+}
+
+.answer-wrapper {
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+
+.choice-btn {
+    width: 80%;
+    text-align: left;
+    padding: 15px 10px 15px 25px;
+    margin-bottom: 20px;
+}
+
+.start-btn {
+    font-size: 25px;
+    width: 400px;
+}
+
+.initial-label {
+    font-size: 20px;
+}
+
+.initial-entry {
+    display: block;
+    width: 500px;
+    margin: 5px auto 0 auto;
+    padding: 10px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Press Start 2P', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.high-score-submit {
+    width: 20%;
+}
+
+.high-scores-list {
+    width: 50%;
+    margin: 50px auto;
+    list-style: none;
+}
+
+.high-score {
+    font-family: 'Press Start 2P', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 30px 0;
+    background: rgb(188, 248, 236);
+}
+
+li:nth-child(odd) {
+    background: rgb(159, 160, 195);
+}
+
+.feedback-wrapper p {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.feedback {
+    color: white;
+    padding: 10px;
+    border: solid white 2px;
+    font-size: 20px;
+}
+
+@media screen and (max-width:750px) {
+    .answer-wrapper {
+        width: 100%;
+    }
+
+    .btn {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .choice-btn {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    header {
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    main {
+        width: 90%;
+    }
+
+    .start-btn {
+        width: 80%
+    }
+
+    .choice-btn {
+        padding-left: 10px;
+        width: 90%;
+    }
+
+    .initial-entry, .high-score-submit {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    main {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #page-title {
+        margin-top: 75px;
+    }
+
+    .choice-btn {
+        font-size: 12.5px;
+        width: 90%;
+    }
+}

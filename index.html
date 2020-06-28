@@ -5,33 +5,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Code Quiz</title>
         <link rel="stylesheet" href="./assets/css/style.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     </head>
     <body>
         <header>
-            <p>Time: <span id="timer">100</span></p>
+            <p>Time: <span id="timer">150</span></p>
             <p id="view-high-scores" class="view-high-scores">View High Scores</p>
         </header>
         <main>
             <h1 id="page-title">Coding Quiz</h1>
             <div id="quiz">
-                <p id="question">Click the button when you're ready to play!</p>
-                <div id="answer-choices" class="hidden">
+                <p id="question" class="question">Try to answer all the questions before time runs out! Wrong answers will reduce your remaining time by 10 seconds!</p>
+                <div id="answer-choices" class="hidden answer-wrapper">
                     <button type="submit" class="choice-btn btn" id="choice-button-1">Option 1</button>
                     <button type="submit" class="choice-btn btn" id="choice-button-2">Option 2</button>
                     <button type="submit" class="choice-btn btn" id="choice-button-3">Option 3</button>
                     <button type="submit" class="choice-btn btn" id="choice-button-4">Option 4</button>
                 </div>
             </div>
-            <button type="submit" id="start-btn" class="btn">Start!</button>
+            <button type="submit" id="start-btn" class="start-btn btn">Start!</button>
         </main>
 
-        <form id="high-score-entry" class="hidden">
-            <label for="initial-entry">Enter Your Initials:</label>
-            <input name="initial-entry" type="text" id="initial-entry" required />
-            <button type="submit" id="high-score-submit" class="btn">Submit</button>
+        <form id="high-score-entry" class="high-score-form hidden">
+            <label for="initial-entry" class="initial-label">Enter Your Initials:</label>
+            <input name="initial-entry" type="text" id="initial-entry" class="initial-entry" maxlength="4" required />
+            <button type="submit" id="high-score-submit" class="high-score-submit btn">Submit</button>
         </form>
 
-        <ul id="high-scores-list" class="hidden">
+        <ul id="high-scores-list" class="high-scores-list hidden">
             <!-- High scores from localStorage load here -->
         </ul>
 
@@ -41,7 +42,7 @@
         </form>
 
         <section class="feedback-wrapper">
-            <p id="feedback" class="hidden"></p>
+            <p id="feedback" class="feedback"></p>
         </section>
         
 

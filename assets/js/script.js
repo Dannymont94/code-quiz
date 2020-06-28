@@ -26,8 +26,8 @@ const quizBankArr = [
     {question: "What case is used in JavaScript?", choice1: "UPPERCASE", choice2: "kebab-case", choice3: "snake_case", choice4: "camelCase", answer: "4"},
     {question: "What case is used in CSS?", choice1: "camelCase", choice2: "kebab-case", choice3: "lowercase", choice4: "snake_case", answer: "2"},
     {question: "Which CSS selector has the highest specificity?", choice1: "Psuedo-Element Selector", choice2: "Class Selector", choice3: "Element Selector", choice4: "ID Selector", answer: "4"},
-    {question: "Which HTML element is used to link the JavaScript file?", choice1: "<script>", choice2: "<link>", choice3: "<src>", choice4: "<js>", answer: "1"},
-    {question: "Which HTML element is used to link the CSS file?", choice1: "<script>", choice2: "<link>", choice3: "<css>", choice4: "<stylesheet>", answer: "2"},
+    {question: "Which HTML element is used to link a JavaScript file?", choice1: "<script>", choice2: "<link>", choice3: "<src>", choice4: "<js>", answer: "1"},
+    {question: "Which HTML element is used to link a CSS stylesheet?", choice1: "<script>", choice2: "<link>", choice3: "<css>", choice4: "<stylesheet>", answer: "2"},
     {question: "What is the best place to insert a <script> tag?", choice1: "The bottom of the <head> section", choice2: "The top of the <head> section", choice3: "The bottom of the <body> section", choice4: "The top of the <body> section", answer: "3"},
     {question: 'How would you write "Hello World" in an alert box?', choice1: 'alert("Hello World");', choice2: 'alert.HelloWorld', choice3: 'alert(Hello World);', choice4: 'alertUser("Hello World");', answer: "1"},
     {question: "How do you declare a function in JavaScript?", choice1: 'function ("myFunction") = {};', choice2: "function.myFunction(){};", choice3: "function myFunction(){}", choice4: "function = myFunction(){}", answer: "3"},
@@ -36,13 +36,13 @@ const quizBankArr = [
     {question: "How does a WHILE loop start?", choice1: "while (i <= 10)", choice2: 'while "i <= 10"' , choice3: "while (i =< 10)", choice4: "while i <= 10", answer: "1"},
     {question: "How does a FOR loop start?", choice1: "for (i = 0++)", choice2: "for i = 1", choice3: "for (i = 0; i++)", choice4: "for (var i = 0; i < 5; i++)", answer: "4"},
     {question: "How do you add a comment in HTML?", choice1: "<!-- my comment -->", choice2: "// my comment", choice3: "/* my comment */", choice4: 'comment: "my comment"', answer: "1"},
-    {question: "How do you add a comment in CSS?", choice1: "// my comment", choice2: "<!-- my comment -->", choice3: "/* my comment */", choice4: "comment {my-comment: my comment}", answer: "3"},
+    {question: "How do you add a comment in CSS?", choice1: "// my comment", choice2: "<!-- my comment -->", choice3: "/* my comment */", choice4: "{my-comment: my comment}", answer: "3"},
     {question: "How do you add a comment in JavaScript?", choice1: "<!-- my comment -->", choice2: "// my comment", choice3: 'comment("my comment")', choice4: 'var myComment = "my comment"', answer: "2"},
     {question: "How do you add a comment in JavaScript that has more than one line?", choice1: "/* my multi-line comment */", choice2: "<!-- my multi-line comment -->", choice3: 'comment("my multi-line comment")', choice4: "// my multi-line comment //", answer: "1"},
     {question: "How do you create a JavaScript array?", choice1: 'var colors = "red", "blue", "green";', choice2: 'var colors = ["red", "blue", "green"];', choice3: 'array colors = ["red", "blue", "green"];', choice4: 'var colors = ("red", "green", "blue");', answer: "2"},
-    {question: "What method in JavaScript will always round a number down to the nearest whole number?", choice1: "Math.round(x)", choice2: "Math.floor(x)", choice3: "Math.random(x)", choice4: "Math.abs(x)", answer: "2"},
+    {question: "What method in JavaScript will always round down to the nearest whole number?", choice1: "Math.round(x)", choice2: "Math.floor(x)", choice3: "Math.random(x)", choice4: "Math.abs(x)", answer: "2"},
     {question: "The Math.random method will return a random number between ______.", choice1: "-1 and 1", choice2: "0 and 100", choice3: "1 and 10", choice4: "0 and 1", answer: "4"},
-    {question: "How can we execute a function callback when a user clicks on a button?", choice1: "click.myButtonEl.myFunction();", choice2: "myButtonEl.clickListener.myFunction();", choice3: "myButtonEl.onclick.myFunction();", choice4: 'myButtonEl.addEventListener("click", myFunction);', answer: "4"},
+    {question: "How can we execute a function callback when a user clicks on a button?", choice1: "click.myButtonEl.myFunction();", choice2: "myButtonEl.clickListener.myFunction();", choice3: "myButtonEl.onclick.myFunction();", choice4: 'myButtonEl.onclick = myFunction;', answer: "4"},
     {question: "How do you declare a JavaScript variable?", choice1: "var myVar = value;", choice2: "myVar = value;", choice3: "variable myVar = value;", choice4: "var(myVar) = value;", answer: "1"},
     {question: "What is the logical operator for OR?", choice1: "%%", choice2: "&&", choice3: "||", choice4: "$$", answer: "3"},
     {question: "What is the logical operator for AND?", choice1: "||", choice2: "^^", choice3: "##", choice4: "&&", answer: "4"},
@@ -56,7 +56,7 @@ quizBankArr.sort(function() {
 });
 
 // define other variables
-var timeRemaining = 100;
+var timeRemaining = 150;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
 var currentQuestionIndex = 0;
@@ -67,6 +67,7 @@ var maxHighScores = 5;
 // starts counter and starts loading questions
 function startQuiz() {
     viewHighScoresEl.classList.add("hidden");
+    headerEl.setAttribute("style", "justify-content:center");
     pageTitleEl.classList.add("hidden");
     startBtn.classList.add("hidden");
     answersContainerEl.classList.remove("hidden");
@@ -101,8 +102,9 @@ function checkResponse(response) {
     if (response == quizBankArr[currentQuestionIndex].answer) {
         score++;
         feedbackEl.textContent = "Correct!";
+        bodyEl.setAttribute("style", "background-color:rgb(0, 151, 70)");
         feedbackEl.classList.remove("hidden");
-        setTimeout(clearFeedback, 1000);
+        setTimeout(clearFeedback, 1000 * .75);
         checkGameOver();
     }
     // if wrong, let user know they answered incorrectly and decrement timer by 10
@@ -113,14 +115,16 @@ function checkResponse(response) {
         }
         timerSpanEl.textContent = timeRemaining;
         feedbackEl.textContent = "Wrong!";
+        bodyEl.setAttribute("style", "background-color:rgb(206, 66, 87)");
         feedbackEl.classList.remove("hidden");
-        setTimeout(clearFeedback, 1000);
+        setTimeout(clearFeedback, 1000 * .75);
         checkGameOver();
     }
 }
 
 function clearFeedback() {
     feedbackEl.classList.add("hidden");
+    bodyEl.setAttribute("style", "background-color:white");
 }
 
 function checkGameOver() {
@@ -147,7 +151,7 @@ function endQuiz() {
 function storeHighScore(event){
     event.preventDefault();
 
-    var mostRecentScore = {initials: initialEntryEl.value, highScore: score};
+    var mostRecentScore = {initials: initialEntryEl.value.toUpperCase(), highScore: score};
     highScores.push(mostRecentScore);
     highScores.sort(function(a,b) {
         return b.highScore - a.highScore;
@@ -163,9 +167,11 @@ function storeHighScore(event){
 // display top 5 high scores. Ask user if they want to clear scores or go back to quiz start page.
 function displayHighScores() {
     if (localStorage.getItem("highScoreData")) {
+        headerEl.classList.add("hidden");
         questionEl.classList.add("hidden");
         startBtn.classList.add("hidden");
         pageTitleEl.textContent = "High Scores";
+        pageTitleEl.setAttribute("style", "margin-top: 90px");
         pageTitleEl.classList.remove("hidden");
         goBackBtn.classList.remove("hidden");
         clearHighScoresBtn.classList.remove("hidden");
@@ -182,7 +188,8 @@ function displayHighScores() {
 
 // if user clicks "view high scores" while highScoreData in localStorage doesn't exist OR if user clears highScoreData from localStorage
 function noHighScores() {
-    pageTitleEl.textContent = "No High Scores!"
+    pageTitleEl.textContent = "No High Scores!";
+    pageTitleEl.setAttribute("style", "margin-top: 90px");
     headerEl.classList.add("hidden");
     questionEl.classList.add("hidden");
     startBtn.classList.add("hidden");
