@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Code Quiz</title>
         <link rel="stylesheet" href="./assets/css/style.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
     </head>
     <body>
         <header>
@@ -25,27 +25,21 @@
             </div>
             <button type="submit" id="start-btn" class="start-btn btn">Start!</button>
         </main>
-
         <form id="high-score-entry" class="high-score-form hidden">
             <label for="initial-entry" class="initial-label">Enter Your Initials:</label>
             <input name="initial-entry" type="text" id="initial-entry" class="initial-entry" maxlength="4" required />
             <button type="submit" id="high-score-submit" class="high-score-submit btn">Submit</button>
         </form>
-
         <ul id="high-scores-list" class="high-scores-list hidden">
             <!-- High scores from localStorage load here -->
         </ul>
-
         <form id="quiz-end-form">
             <button id="restart-btn" class="hidden btn">Go Back</button>
             <button id="clear-scores-btn" class="hidden btn">Clear High Scores</button>
         </form>
-
         <section class="feedback-wrapper">
             <p id="feedback" class="feedback"></p>
         </section>
-        
-
         <script src="./assets/js/script.js"></script>
     </body>
 </html>
