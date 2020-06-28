@@ -21,7 +21,7 @@ const goBackBtn = document.querySelector("#restart-btn");
 const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
 const feedbackEl = document.querySelector("#feedback");
 
-// create and shuffle question and answer choice array
+// create quiz bank array
 const quizBankArr = [
     {question: "What case is used in JavaScript?", choice1: "UPPERCASE", choice2: "kebab-case", choice3: "snake_case", choice4: "camelCase", answer: "4"},
     {question: "What case is used in CSS?", choice1: "camelCase", choice2: "kebab-case", choice3: "lowercase", choice4: "snake_case", answer: "2"},
@@ -50,12 +50,12 @@ const quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
+// shuffle quiz bank array
 quizBankArr.sort(function() {
     return 0.5 - Math.random()
 });
 
 // define other variables
-quizBankArr.sort(() => 0.5 - Math.random());
 var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
@@ -89,15 +89,15 @@ function timer() {
 function askQuestions() {
     // display questions as text and answer choices as buttons
     questionEl.textContent = "#" + (currentQuestionIndex+1) + ": " + quizBankArr[currentQuestionIndex].question;
-    choiceBtn1.textContent = "1. " + quizBankArr[currentQuestionIndex].choice1
-    choiceBtn2.textContent = "2. " + quizBankArr[currentQuestionIndex].choice2
-    choiceBtn3.textContent = "3. " + quizBankArr[currentQuestionIndex].choice3
-    choiceBtn4.textContent = "4. " + quizBankArr[currentQuestionIndex].choice4
+    choiceBtn1.textContent = "1. " + quizBankArr[currentQuestionIndex].choice1;
+    choiceBtn2.textContent = "2. " + quizBankArr[currentQuestionIndex].choice2;
+    choiceBtn3.textContent = "3. " + quizBankArr[currentQuestionIndex].choice3;
+    choiceBtn4.textContent = "4. " + quizBankArr[currentQuestionIndex].choice4;
 };
 
 // checks user's answer against correct answer
 function checkResponse(response) {
-    // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
+    // if correct, let user know they answered correctly and increment score by 1
     if (response == quizBankArr[currentQuestionIndex].answer) {
         score++;
         feedbackEl.textContent = "Correct!";
@@ -105,7 +105,7 @@ function checkResponse(response) {
         setTimeout(clearFeedback, 1000);
         checkGameOver();
     }
-    // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
+    // if wrong, let user know they answered incorrectly and decrement timer by 10
     else {
         timeRemaining -= 10;
         if (timeRemaining <= 0) {
@@ -182,8 +182,8 @@ function displayHighScores() {
 
 // if user clicks "view high scores" while highScoreData in localStorage doesn't exist OR if user clears highScoreData from localStorage
 function noHighScores() {
-    headerEl.classList.add("hidden");
     pageTitleEl.textContent = "No High Scores!"
+    headerEl.classList.add("hidden");
     questionEl.classList.add("hidden");
     startBtn.classList.add("hidden");
     goBackBtn.classList.remove("hidden");
