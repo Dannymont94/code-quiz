@@ -17,12 +17,12 @@ const initialEntryEl = document.querySelector("#initial-entry");
 const highScoreSubmitBtn = document.querySelector("#high-score-submit");
 const highScoresListEl = document.querySelector("#high-scores-list");
 const quizEndEl = document.querySelector("#quiz-end-form");
-const goBackBtn = document.querySelector("#restart-btn")
+const goBackBtn = document.querySelector("#restart-btn");
 const clearHighScoresBtn = document.querySelector("#clear-scores-btn")
 const feedbackEl = document.querySelector("#feedback");
 
-// create question and answer choice array
-var quizBankArr = [
+// create and shuffle question and answer choice array
+const quizBankArr = [
     {question: "What case is used in JavaScript?", choice1: "UPPERCASE", choice2: "kebab-case", choice3: "snake_case", choice4: "camelCase", answer: "4"},
     {question: "What case is used in CSS?", choice1: "camelCase", choice2: "kebab-case", choice3: "lowercase", choice4: "snake_case", answer: "2"},
     {question: "Which CSS selector has the highest specificity?", choice1: "Psuedo-Element Selector", choice2: "Class Selector", choice3: "Element Selector", choice4: "ID Selector", answer: "4"},
@@ -50,7 +50,12 @@ var quizBankArr = [
     {question: "Which of the following is not a JavaScript event?", choice1: "submit", choice2: "link", choice3: "drop", choice4: "click", answer: "2"}
 ];
 
+quizBankArr.sort(function() {
+    return 0.5 - Math.random()
+});
+
 // define other variables
+quizBankArr.sort(() => 0.5 - Math.random());
 var timeRemaining = 100;
 var score = 0;
 var lastQuestionIndex = quizBankArr.length -1;
@@ -59,7 +64,7 @@ var countdown = "";
 var highScores = JSON.parse(localStorage.getItem("highScoreData")) || [];
 var maxHighScores = 5;
 
-// starts counter and asks user questions
+// starts counter and starts loading questions
 function startQuiz() {
     viewHighScoresEl.classList.add("hidden");
     pageTitleEl.classList.add("hidden");
@@ -71,8 +76,8 @@ function startQuiz() {
 
 // display timeRemaining to user and decrement timeRemaining once per second
 function timer() {
+    // when timer reaches 0, the game is over
     if (timeRemaining <= 0) {
-        // when timer reaches 0, the game is over
         clearInterval(countdown);
         checkGameOver();
     }
@@ -82,7 +87,6 @@ function timer() {
 
 // asks user questions from quizBankArr
 function askQuestions() {
-    console.log("Question #" + (currentQuestionIndex+1) + " loaded")
     // display questions as text and answer choices as buttons
     questionEl.textContent = "#" + (currentQuestionIndex+1) + ": " + quizBankArr[currentQuestionIndex].question;
     choiceBtn1.textContent = "1. " + quizBankArr[currentQuestionIndex].choice1
@@ -95,9 +99,7 @@ function askQuestions() {
 function checkResponse(response) {
     // if correct, let user know they answered correctly and increment score. Feedback message goes away after a few seconds.
     if (response == quizBankArr[currentQuestionIndex].answer) {
-        console.log("Correct!")
         score++;
-        console.log("score: ", score);
         feedbackEl.textContent = "Correct!";
         feedbackEl.classList.remove("hidden");
         setTimeout(clearFeedback, 1000);
@@ -105,7 +107,6 @@ function checkResponse(response) {
     }
     // if wrong, let user know they answered incorrectly and decrease timer by 10. Feedback message goes away after a few seconds.
     else {
-        console.log("Wrong!")
         timeRemaining -= 10;
         if (timeRemaining <= 0) {
             timeRemaining = 0;
@@ -142,7 +143,7 @@ function endQuiz() {
     questionEl.textContent = "Final Score: " + score;
 }
 
-// store final score and initials in localStorage
+// store final score and initials in localStorage if within top 5 results
 function storeHighScore(event){
     event.preventDefault();
 
@@ -152,7 +153,6 @@ function storeHighScore(event){
         return b.highScore - a.highScore;
     })
     highScores.splice(maxHighScores);
-    console.log(highScores);
     localStorage.setItem("highScoreData", JSON.stringify(highScores));
 
     highScoreEntryEl.classList.add("hidden");
@@ -198,8 +198,6 @@ function clearHighScores() {
     noHighScores();
 }
 
-
-// start quiz when start button is clicked
 startBtn.onclick = startQuiz;
 
 choiceBtn1.addEventListener("click", function() {checkResponse(1)});
